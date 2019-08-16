@@ -1,0 +1,41 @@
+<html>
+
+<style type="text/css">
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    #flappy {
+        border: 1px solid black;
+        height: 400;
+        width: 800;
+
+        left: calc(50% - 400px);
+        top: calc(50% - 200px);
+        position: absolute;
+    }
+</style>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.js"></script>
+
+<script type="text/javascript" src="js/game/Bird.js"></script>
+<script type="text/javascript" src="js/game/Column.js"></script>
+<script type="text/javascript" src="js/game/Info.js"></script>
+<script type="text/javascript" src="js/game/Flappy.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        let fl = new Flappy(1, 5, 4, 50, 800, 400);
+
+        fl.start('flappy');
+    });
+
+</script>
+
+<body>
+    <canvas id="flappy"></canvas>
+</body>
+
+</html>
