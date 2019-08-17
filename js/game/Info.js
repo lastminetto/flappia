@@ -21,8 +21,8 @@ function Info(canvas) {
     this.canvas.add(this.text);
 }
 
-Info.prototype.update = function (objects, score, birds) {
+Info.prototype.update = function (objects, score, birds, generation, fitness, active) {
 
-    this.text.set({text: `Objects ${objects} | Score ${score} | Birds ${birds}`});
+    this.text.set({text: `Objects ${objects} | Score ${score} | Birds ${birds} | Generation ${generation} | Fitness ${fitness} | Active ${active}`});
 
 }

@@ -1,6 +1,7 @@
 function Bird(x, y, gravity, fill, canvas) {
 
     this.y = y;
+    this.score = 0;
     this.canvas = canvas;
     this.gravity = gravity;
 
@@ -24,7 +25,7 @@ function Bird(x, y, gravity, fill, canvas) {
     });
 
     this.canvas.add(this.bird);
-}
+};
 
 Bird.prototype.crashWithColumn = function (column) {
 
@@ -34,17 +35,32 @@ Bird.prototype.crashWithColumn = function (column) {
     if (this.bird.intersectsWithObject(column.bottomRect))
         this.dead = true;
 
-    if (this.canvas.height <= (this.bird.top + 20))
+    if (this.canvas.height <= (this.bird.top + 20) || this.bird.top <= 0)
         this.dead = true;
-}
+};
 
 Bird.prototype.update = function () {
     this.y += this.gravity;
 
     this.bird.set({ top: this.y });
     this.bird.setCoords();
-}
+};
 
 Bird.prototype.flappy = function () {
-    this.y -= 70;
+    this.y -= 50;
+};
+
+Bird.prototype.inputs = function (column) {
+
+    let birdBounds = this.bird.getCenterPoint();
+    let columnBounds = column.bottomRect.getBoundingRect();
+
+    let distanciaTopoColuna = birdBounds.y - columnBounds.top;
+    let distanciaColuna = columnBounds.left + columnBounds.width;
+
+    return [
+        this.dead,
+        distanciaTopoColuna,
+        distanciaColuna
+    ];
 };

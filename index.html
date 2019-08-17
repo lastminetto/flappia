@@ -20,17 +20,17 @@
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.3.2/fabric.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/synaptic/1.1.4/synaptic.js"></script>
 
 <script type="text/javascript" src="js/game/Bird.js"></script>
 <script type="text/javascript" src="js/game/Column.js"></script>
 <script type="text/javascript" src="js/game/Info.js"></script>
 <script type="text/javascript" src="js/game/Flappy.js"></script>
+<script type="text/javascript" src="js/ia/Genetic.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function () {
-        let fl = new Flappy(1, 5, 4, 50, 800, 400);
-
-        fl.start('flappy');
+        new Flappy(100, 5, 7, 50, 800, 400).start('flappy');
     });
 
 </script>
