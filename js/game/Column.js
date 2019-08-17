@@ -1,20 +1,50 @@
-function Column(width, height, gap, x, canvasHeight, fill, ctx) {
-
-    this.width = width;
-    this.height = height;
-    this.gap = gap;
+function Column(width, height, gap, x, canvasHeight, fill, canvas) {
 
     this.x = x;
-    this.canvasHeight = canvasHeight;
-
-    this.bottomY = this.height + this.gap;
-    this.bottomHeigth = this.canvasHeight - this.height;
-
-    this.fill = fill;
-
-    this.context = ctx;
+    this.width = width;
 
     this.outOfBox = false;
+
+    this.topRect = new fabric.Rect({
+        left: this.x,
+        top: 0,        
+        width: this.width,
+        height: height,
+        fill: fill,
+        opacity: 0.7,
+        hasControls: false,
+        lockMovementX: true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockRotation: true,
+        lockUniScaling: true,
+        transparentCorners: true
+    });
+    
+    canvas.add(this.topRect);
+
+    let bottomY = height + gap;
+    let bottomHeigth = canvasHeight - height;
+
+    this.bottomRect = new fabric.Rect({
+        left: this.x,
+        top: bottomY,
+        width: this.width,
+        height: bottomHeigth,
+        fill: fill,
+        opacity: 0.7,
+        hasControls: false,
+        lockMovementX: true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockRotation: true,
+        lockUniScaling: true,
+        transparentCorners: true
+    });
+
+    canvas.add(this.bottomRect);    
 }
 
 Column.prototype.update = function (moveX) {
@@ -26,15 +56,9 @@ Column.prototype.update = function (moveX) {
         return;
     }
 
-    this.context.fillStyle = this.fill;
+    this.topRect.set({ left: this.x });
+    this.topRect.setCoords();
 
-    this.context.fillRect(this.x, 0, this.width, this.height);
-    this.context.fillRect(this.x, this.bottomY, this.width, this.bottomHeigth);
-}
-
-Column.prototype.bounds = function () {
-    return [
-        [this.x, 0, this.x + this.width, this.height],
-        [this.x, this.bottomY, this.x + this.width, this.height + this.gap + this.bottomHeigth]
-    ];
+    this.bottomRect.set({ left: this.x });
+    this.bottomRect.setCoords();
 }

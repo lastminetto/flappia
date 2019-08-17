@@ -1,62 +1,50 @@
-function Bird(x, y, gravity, fill, context) {
+function Bird(x, y, gravity, fill, canvas) {
 
-    this.posX = x;
-    this.posY = y;
-    this.fill = fill;
-
-    this.width = 20;
-    this.height = 20;
+    this.y = y;
+    this.canvas = canvas;
+    this.gravity = gravity;
 
     this.dead = false;
 
-    this.gravity = gravity;
+    this.bird = new fabric.Rect({
+        left: x,
+        top: this.y,
+        width: 20,
+        height: 20,
+        fill: fill,
+        opacity: 1,
+        hasControls: false,
+        lockMovementX: true,
+        lockMovementY: true,
+        lockScalingX: true,
+        lockScalingY: true,
+        lockRotation: true,
+        lockUniScaling: true,
+        transparentCorners: true
+    });
 
-    this.context = context;
+    this.canvas.add(this.bird);
 }
 
-Bird.prototype.bounds = function () {
-    return [
-        this.posX,
-        this.posY,
-        this.posX + this.width,
-        this.posY + this.height
-    ];
-}
+Bird.prototype.crashWithColumn = function (column) {
 
-Bird.prototype.crashWith = function (column) {
+    if (this.bird.intersectsWithObject(column.topRect))
+        this.dead = true;
 
-    const birdBounds = this.bounds();
-    const columnBounds = column.bounds();
+    if (this.bird.intersectsWithObject(column.bottomRect))
+        this.dead = true;
 
-    let intersect = false;
-
-    for (let i = 0; i < columnBounds.length; i++) {
-
-        if (intersect)
-            continue;
-
-        let b = birdBounds;
-        let c = columnBounds[i];
-
-        intersect = !(c[0] > b[2] || c[2] < b[0] || c[1] > b[3] || c[3] < b[1]);
-    }
-
-    if (birdBounds[1] <= 0 || birdBounds[1] >= columnBounds[1][3] || birdBounds[3] <= 0 || birdBounds[3] >= columnBounds[1][3])
-        return true;
-
-    return intersect;
+    if (this.canvas.height <= (this.bird.top + 20))
+        this.dead = true;
 }
 
 Bird.prototype.update = function () {
+    this.y += this.gravity;
 
-    this.context.fillStyle = this.fill;
-
-    this.posY += this.gravity;
-
-    this.context.globalCompositeOperation = 'destination-over';
-    this.context.fillRect(this.posX, this.posY, this.width, this.height);
+    this.bird.set({ top: this.y });
+    this.bird.setCoords();
 }
 
 Bird.prototype.flappy = function () {
-    this.posY -= 70;
+    this.y -= 70;
 };

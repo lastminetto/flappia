@@ -7,18 +7,19 @@
         padding: 0;
     }
 
-    #flappy {
+    .flappy-container {
         border: 1px solid black;
         height: 400;
         width: 800;
 
-        left: calc(50% - 400px);
-        top: calc(50% - 200px);
-        position: absolute;
+        left: calc(50% - 400px) !important;
+        top: calc(50% - 200px) !important;
+        position: absolute !important;
     }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.4.1.slim.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/3.3.2/fabric.js"></script>
 
 <script type="text/javascript" src="js/game/Bird.js"></script>
 <script type="text/javascript" src="js/game/Column.js"></script>
@@ -35,7 +36,9 @@
 </script>
 
 <body>
-    <canvas id="flappy"></canvas>
+    <div class="flappy-container">
+        <canvas id="flappy"></canvas>
+    </div>
 </body>
 
 </html>
